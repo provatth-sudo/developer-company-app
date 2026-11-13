@@ -1,0 +1,77 @@
+"use client";
+
+import { useState } from "react";
+
+export default function Projects() {
+  const [projects, setProjects] = useState([]);
+  const [name, setName] = useState("");
+  const [location, setLocation] = useState("");
+
+  function addProject() {
+    if (!name.trim() || !location.trim()) return;
+
+    setProjects([
+      ...projects,
+      {
+        id: Date.now(),
+        name,
+        location,
+        status: "Running"
+      }
+    ]);
+
+    setName("");
+    setLocation("");
+  }
+
+  return (
+    <main style={{
+      minHeight: "100vh",
+      background: "#0b1220",
+      color: "white",
+      padding: "25px",
+      fontFamily: "Arial"
+    }}>
+      <h1>NHM BUILDERS</h1>
+      <h2>Project Management</h2>
+      <p>Manage Construction Projects</p>
+
+      <input
+        placeholder="Project Name"
+        value={name}
+        onChange={(e) => setName(e.target.value)}
+        style={{ padding: "12px", margin: "5px" }}
+      />
+
+      <input
+        placeholder="Project Location"
+        value={location}
+        onChange={(e) => setLocation(e.target.value)}
+        style={{ padding: "12px", margin: "5px" }}
+      />
+
+      <button onClick={addProject} style={{
+        padding: "12px 20px",
+        margin: "5px",
+        cursor: "pointer"
+      }}>
+        + Add Project
+      </button>
+
+      <h2>All Projects</h2>
+
+      {projects.map((project) => (
+        <div key={project.id} style={{
+          background: "#17243a",
+          padding: "20px",
+          marginBottom: "12px",
+          borderRadius: "12px"
+        }}>
+          <h3>{project.name}</h3>
+          <p>Location: {project.location}</p>
+          <p>Status: {project.status}</p>
+        </div>
+      ))}
+    </main>
+  );
+}
