@@ -1,0 +1,77 @@
+"use client";
+
+import { useState } from "react";
+
+export default function Admin() {
+  const [admins, setAdmins] = useState([
+    { id: 1, name: "Main Admin", role: "Super Admin" }
+  ]);
+
+  const [name, setName] = useState("");
+  const [role, setRole] = useState("Admin");
+
+  function addAdmin() {
+    if (!name.trim()) return;
+
+    setAdmins([
+      ...admins,
+      { id: Date.now(), name, role }
+    ]);
+
+    setName("");
+  }
+
+  return (
+    <main style={{
+      minHeight: "100vh",
+      background: "#0b1220",
+      color: "white",
+      padding: "25px",
+      fontFamily: "Arial"
+    }}>
+      <h1>NHM BUILDERS</h1>
+      <h2>Admin Management</h2>
+      <p>Manage System Administrators</p>
+
+      <h3>Add New Admin</h3>
+
+      <input
+        placeholder="Admin Name"
+        value={name}
+        onChange={(e) => setName(e.target.value)}
+        style={{ padding: "12px", margin: "5px" }}
+      />
+
+      <select
+        value={role}
+        onChange={(e) => setRole(e.target.value)}
+        style={{ padding: "12px", margin: "5px" }}
+      >
+        <option value="Admin">Admin</option>
+        <option value="Manager">Manager</option>
+        <option value="Super Admin">Super Admin</option>
+      </select>
+
+      <button onClick={addAdmin} style={{
+        padding: "12px 20px",
+        margin: "5px"
+      }}>
+        + Add Admin
+      </button>
+
+      <h2>Admin List</h2>
+
+      {admins.map((admin) => (
+        <div key={admin.id} style={{
+          background: "#17243a",
+          padding: "20px",
+          marginBottom: "12px",
+          borderRadius: "12px"
+        }}>
+          <h3>{admin.name}</h3>
+          <p>Role: {admin.role}</p>
+        </div>
+      ))}
+    </main>
+  );
+}
